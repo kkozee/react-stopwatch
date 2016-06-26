@@ -1,0 +1,13 @@
+#main {
+  font-size: 2rem;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+.btn {
+  margin: 1rem;
+}
+
+.elapsed-time {
+  font-size: 10rem;
+}
