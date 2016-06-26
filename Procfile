@@ -1,1 +1,1 @@
-npm compile
+npm run-script compile
