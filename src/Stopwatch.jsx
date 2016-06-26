@@ -69,10 +69,6 @@ export default class Stopwatch extends React.Component {
     this.key = Date.now();
   }
 
-  componentWillUnmount() {
-    this.stop();
-  }
-
   render() {
     return (
       <div id="main" key={ this.key }>
