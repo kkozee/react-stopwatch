@@ -1,1 +1,1 @@
-npm run-script compile
+web: npm run-script compile
