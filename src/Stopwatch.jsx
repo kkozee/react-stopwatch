@@ -11,19 +11,18 @@ export default class Stopwatch extends React.Component {
       isRunning: false,
       minutes: '00',
       seconds: '00',
-      milliseconds: '000'
+      milliseconds: '00'
     };
 
     this.laps = [];
-    this.key = 0;
     this.state = this.initialState;
   }
 
   tick = () => {
-    let delta = Date.now() - this.state.startTime;
-
-    this.setState({ elapsedTime: this.state.elapsedTime + delta });
-    this.state.startTime = Date.now();
+    this.setState({
+      elapsedTime: this.state.elapsedTime + (Date.now() - this.state.startTime),
+      startTime: Date.now()
+    });
 
     let seconds = this.state.elapsedTime / 1000;
 
@@ -31,7 +30,7 @@ export default class Stopwatch extends React.Component {
       startTime: Date.now(),
       minutes: Math.floor(seconds / 60).toString(),
       seconds: Math.floor(seconds % 60).toString(),
-      milliseconds: (seconds % 1).toFixed(3).substring(2)
+      milliseconds: (seconds % 1).toFixed(2).substring(2)
     });
   }
 
@@ -50,12 +49,12 @@ export default class Stopwatch extends React.Component {
   start = () => {
     this.setState({ isRunning: true });
     this.state.startTime = Date.now();
-    this.interval = setInterval(this.tick, 10);
+    this.interval = setInterval(this.tick, 200);
   }
 
   stop = () => {
-    this.setState({ isRunning: false });
     clearInterval(this.interval);
+    this.setState({ isRunning: false });
   }
 
   lap = () => {
@@ -63,15 +62,14 @@ export default class Stopwatch extends React.Component {
   }
 
   reset = () => {
-    this.setState(this.initialState);
     clearInterval(this.interval);
+    this.setState(this.initialState);
     this.laps = [];
-    this.key = Date.now();
   }
 
   render() {
     return (
-      <div id="main" key={ this.key }>
+      <div id="main">
         <div className="elapsed-time">
           { this.time() }
         </div>
@@ -83,7 +81,7 @@ export default class Stopwatch extends React.Component {
             { this.state.isRunning ? 'Lap' : 'Reset' }
           </button>
         </div>
-        <Laps key={ this.key } laps={ this.laps } />
+        <Laps laps={ this.laps } />
       </div>
     );
   }
