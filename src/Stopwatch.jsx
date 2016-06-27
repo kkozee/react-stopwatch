@@ -20,14 +20,13 @@ export default class Stopwatch extends React.Component {
 
   tick = () => {
     this.setState({
-      elapsedTime: this.state.elapsedTime + (Date.now() - this.state.startTime),
-      startTime: Date.now()
+      startTime: Date.now(),
+      elapsedTime: this.state.elapsedTime + (Date.now() - this.state.startTime)
     });
 
     let seconds = this.state.elapsedTime / 1000;
 
     this.setState({
-      startTime: Date.now(),
       minutes: Math.floor(seconds / 60).toString(),
       seconds: Math.floor(seconds % 60).toString(),
       milliseconds: (seconds % 1).toFixed(2).substring(2)
@@ -49,7 +48,7 @@ export default class Stopwatch extends React.Component {
   start = () => {
     this.setState({ isRunning: true });
     this.state.startTime = Date.now();
-    this.interval = setInterval(this.tick, 200);
+    this.interval = setInterval(this.tick, 10);
   }
 
   stop = () => {
